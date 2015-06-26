@@ -31,6 +31,8 @@ function ferinatheme_after_setup(){
 		add_action( 'load-post.php', 'ferina_meta_boxes' );
 		add_action( 'load-post-new.php', 'ferina_meta_boxes' );
 	}
+
+	add_action( 'admin_enqueue_scripts', 'ferina_metaboxes_js' );
 }
 
 function register_ferina_session(){

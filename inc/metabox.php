@@ -149,7 +149,7 @@ class mbRetailProduct {
 					<td>10</td>
 				</tr>
 				<tr>
-					<td>Stock Sell</td>
+					<td>Stock Sold</td>
 					<td>2015-10-24 12:23:09</td>
 					<td><span style="display:block; width:20px; height: 20px; background: #00f;"></span></td>
 					<td>32</td>
@@ -164,7 +164,7 @@ class mbRetailProduct {
 				</tr>
 				<tr align="left">
 					<th style="border:0;" colspan="2"></th>
-					<th colspan="2"><?php _e('Stock Sell', 'ferina'); ?></th>
+					<th colspan="2"><?php _e('Stock Sold', 'ferina'); ?></th>
 					<th>1</th>
 				</tr>
 				<tr align="left">
@@ -178,7 +178,21 @@ class mbRetailProduct {
 	}
 
 	public function rmbc_ferina_product_images($post){
-		$html = '<div style="text-align: right; padding-bottom: 15px;"><a href="#" id="add-more-stocks" class="button button-primary button-large">' . __('Add More Images', 'ferina') . '</a></div>';
+		global $post;
+		$upload_link = esc_url( get_upload_iframe_src( 'image', $post->ID ) );
+		$fipmeta = get_post_meta( $post->ID, '_ferina_product_images', true );
+		$fipattachment = wp_get_attachment_image_src( $fipmeta, 'thumbnail' );
+		$html  = '<div style="text-align: right; padding-bottom: 15px;"><a href="'.$upload_link.'" id="add-more-imgs" class="button button-primary button-large">' . __('Add More Images', 'ferina') . '</a></div>';
+		$html .= '<ul id="ferina-product-images-ul"></ul>';
+
 		echo $html;
 	}
+}
+
+function ferina_metaboxes_js($hook) {
+    if ( 'post-new.php' != $hook ) {
+        return;
+    }
+    wp_enqueue_script( 'ferina_jquery_ui', get_template_directory_uri() . '/asset/admin/js/jquery-ui.min.js' );
+    wp_enqueue_script( 'ferina_metaboxes_js', get_template_directory_uri() . '/asset/admin/js/_ferina_main.js' );
 }
