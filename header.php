@@ -7,7 +7,7 @@
 		<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,700" rel="stylesheet" type="text/css">
 		<link href="http://fonts.googleapis.com/css?family=Roboto:400,300,400italic,700" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" media="all">
-		<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_url');?>/lib/css/style.css" media="all">
+		<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_url');?>/asset/css/style.css" media="all">
 
 		<?php wp_head(); ?>
 	</head>
@@ -23,7 +23,7 @@
 					<ul class="topakun">
 						<li class="dropdown">
 							<?php $greet = ferinagreeting(); ?>
-							<a href="#"><img src="<?php bloginfo('template_url'); ?>/lib/img/aku-ico.png" alt="akun"><?php echo $greet['greeting']; ?></a>
+							<a href="#"><img src="<?php bloginfo('template_url'); ?>/asset/img/aku-ico.png" alt="akun"><?php echo $greet['greeting']; ?></a>
 							<ul class="bukatutup">
 								<li><?php echo $greet['urlsatu']; ?></li>
 								<li><?php echo $greet['urldua']; ?></li> 
@@ -41,7 +41,7 @@
 				<div class="logo-wrapper">
 					<h1>
 						<a href="<?php echo home_url('/'); ?>" title="<?php bloginfo('name');?>">
-							<img alt="<?php bloginfo('name');?>" src="<?php echo ( get_option('image_logo') == '' )? get_bloginfo('template_url') . '/lib/img/logo.png' : get_option('image_logo'); ?>" alt="<?php bloginfo('name');?>">
+							<img alt="<?php bloginfo('name');?>" src="<?php echo ( get_option('image_logo') == '' )? get_bloginfo('template_url') . '/asset/img/logo.png' : get_option('image_logo'); ?>" alt="<?php bloginfo('name');?>">
 						</a>
 					</h1>
 				</div>
