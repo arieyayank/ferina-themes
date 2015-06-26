@@ -1,6 +1,9 @@
 <?php
 function ferina_meta_boxes() {
     new mbRetailProduct();
+    remove_meta_box( 'stylediv', 'retail-product', 'side' );
+    remove_meta_box( 'tagsdiv-colour', 'retail-product', 'side' );
+    remove_meta_box( 'tagsdiv-size', 'retail-product', 'side' );
 }
 
 class mbRetailProduct {

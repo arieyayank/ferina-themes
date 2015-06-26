@@ -1,5 +1,5 @@
 <?php
-function ferina_widget(){
+function ferina_sidebars(){
 	register_sidebar(
 		array(
 			'name'=> __('Primary Sidebar', 'h5'),

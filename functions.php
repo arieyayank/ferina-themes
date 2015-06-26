@@ -25,7 +25,7 @@ function ferinatheme_after_setup(){
 	add_action('init', 'ferina_session');
 	add_action('init', 'register_product_init');
 	add_action('init', 'ferina_menu');
-	add_action('init', 'ferina_widget');
+	add_action('init', 'ferina_sidebars');
 
 	if ( is_admin() ){
 		add_action( 'load-post.php', 'ferina_meta_boxes' );
