@@ -1,6 +1,7 @@
 <?php
 function ferina_meta_boxes() {
     new mbRetailProduct();
+
     remove_meta_box( 'stylediv', 'retail-product', 'side' );
     remove_meta_box( 'tagsdiv-colour', 'retail-product', 'side' );
     remove_meta_box( 'tagsdiv-size', 'retail-product', 'side' );
@@ -54,7 +55,7 @@ class mbRetailProduct {
 		if ( ! isset( $_POST['fpr_metabox_nonce_field'] ) )
 			return $post_id;
 
-		$nonce = $_POST['fpr_metabox_nonce_field'];
+		$nonce = sanitize_text_field( $_POST['fpr_metabox_nonce_field'] );
 
 		if ( ! wp_verify_nonce( $nonce, 'ferina_product_retail_metabox_nonce' ) )
 			return $post_id;
@@ -64,7 +65,7 @@ class mbRetailProduct {
 
 		if ( 'retail-product' == $_POST['post_type'] ) {
 			if ( ! current_user_can( 'edit_page', $post_id ) )
-				return $post_id;				
+				return $post_id;
 		} else {
 			if ( ! current_user_can( 'edit_post', $post_id ) )
 				return $post_id;
@@ -72,16 +73,25 @@ class mbRetailProduct {
 
 		$ferina_sku = sanitize_text_field( $_POST['ferina_sku'] );
 		$ferina_prod_desc = sanitize_text_field( $_POST['ferina_product_description'] );
+		$prices = sanitize_text_field( $_POST['ferina_product_prices'] );
+		$productstyle = sanitize_text_field( $_POST['ferina_style'] );
+
+		$productstyle = ( $productstyle > 0 ) ? get_term( $productstyle, 'style' )->slug : NULL;
 
 		update_post_meta( $post_id, '_ferina_sku_product', $ferina_sku );
-		update_post_meta( $post_id, '_ferina_description_product', $ferina_sku );
+		update_post_meta( $post_id, '_ferina_description_product', $ferina_prod_desc );
+		update_post_meta( $post_id, '_ferina_product_prices', $prices);
+
+		wp_set_object_terms(  $post_id , $productstyle, 'style' );
 	}
 
 	public function rmbc_ferina_product_details( $post ) {
-		wp_nonce_field( 'ferina_product_retail_meta_box_nonce', 'ferina_product_retail_metabox_nonce' );
+		wp_nonce_field( 'ferina_product_retail_metabox_nonce', 'fpr_metabox_nonce_field' );
 
 		$ferina_sku = get_post_meta( $post->ID, '_ferina_sku_product', true );
 		$ferina_prod_desc = get_post_meta( $post->ID, '_ferina_description_product', true );
+		$ferina_product_prices = get_post_meta( $post->ID, '_ferina_product_prices', true );
+		$selectedstyles = wp_get_object_terms( $post->ID, 'style', array('fields' => 'ids') );
 
 		echo '<p>';
 		echo '<label style="display: inline-block; width: 250px;" for="ferina_sku">';
@@ -96,16 +106,14 @@ class mbRetailProduct {
 		_e( 'Product Prices:', 'ferina' );
 		echo '</label> ';
 		echo '<input type="text" id="ferina_product_prices" name="ferina_product_prices"';
-		echo ' value="' . esc_attr( $ferina_sku ) . '" size="25" />';
+		echo ' value="' . esc_attr( $ferina_product_prices ) . '" size="25" />';
 		echo '</p>';
 
 		echo '<p>';
 		echo '<label style="display: inline-block; width: 250px;" for="ferina_product_style">';
 		_e( 'Product Style:', 'ferina' );
 		echo '</label> ';
-		echo '<select id="ferina_product_style" name="ferina_product_style">';
-		echo '<option> -- Select Product Style -- </option>';
-		echo '</select>';
+		wp_dropdown_categories('taxonomy=style&hide_empty=0&orderby=name&name=ferina_style&show_option_none= -- Select Style -- &selected='.$selectedstyles[0]);
 		echo '</p>';
 
 		echo '<p>';
