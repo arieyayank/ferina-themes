@@ -1,0 +1,16 @@
+.ui-sortable{
+	list-style: none;
+	display: inline-block;
+}
+.ui-sortable > li{
+	float: left;
+	display: table;
+	margin-right: 10px;
+}
+.delete-fpi-li {
+	color: #ff0000;
+	display: block;
+	font-size: 12px;
+	text-align: center;
+	text-decoration: none;
+}
