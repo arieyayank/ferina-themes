@@ -52,4 +52,8 @@ jQuery(function($){
 	$( "#ferina-product-images-ul" ).sortable({
 		revert: true
 	});
+
+	$('#add-more-stocks').click(function(ev){
+		ev.preventDefault();
+	});
 });

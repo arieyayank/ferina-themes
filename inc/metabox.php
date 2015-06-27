@@ -121,8 +121,6 @@ class mbRetailProduct {
 		_e( 'Product Details:', 'ferina' );
 		echo '</label> ';
 		echo '</p>';
-		// echo '<textarea id="ferina_product_description" name="ferina_product_description">';
-		// echo wpautop( esc_attr( $ferina_prod_desc ) ) . '</textarea>';
 		wp_editor($ferina_prod_desc, 'ferina_product_description');
 	}
 
