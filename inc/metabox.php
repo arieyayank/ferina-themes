@@ -72,15 +72,17 @@ class mbRetailProduct {
 		}
 
 		$ferina_sku = sanitize_text_field( $_POST['ferina_sku'] );
-		$ferina_prod_desc = sanitize_text_field( $_POST['ferina_product_description'] );
+		$ferina_prod_desc = $_POST['ferina_product_description'];
 		$prices = sanitize_text_field( $_POST['ferina_product_prices'] );
 		$productstyle = sanitize_text_field( $_POST['ferina_style'] );
+		$ferina_product_images = $_POST['ferina_product_images'];
 
 		$productstyle = ( $productstyle > 0 ) ? get_term( $productstyle, 'style' )->slug : NULL;
 
 		update_post_meta( $post_id, '_ferina_sku_product', $ferina_sku );
 		update_post_meta( $post_id, '_ferina_description_product', $ferina_prod_desc );
 		update_post_meta( $post_id, '_ferina_product_prices', $prices);
+		update_post_meta( $post_id, '_ferina_product_images', serialize($ferina_product_images) );
 
 		wp_set_object_terms(  $post_id , $productstyle, 'style' );
 	}
@@ -91,6 +93,7 @@ class mbRetailProduct {
 		$ferina_sku = get_post_meta( $post->ID, '_ferina_sku_product', true );
 		$ferina_prod_desc = get_post_meta( $post->ID, '_ferina_description_product', true );
 		$ferina_product_prices = get_post_meta( $post->ID, '_ferina_product_prices', true );
+
 		$selectedstyles = wp_get_object_terms( $post->ID, 'style', array('fields' => 'ids') );
 
 		echo '<p>';
@@ -128,7 +131,14 @@ class mbRetailProduct {
 
 	public function rmbc_ferina_product_stocks( $post ){
 		?>
-		<div style="text-align: right; padding-bottom: 15px;"><a href="#" id="add-more-stocks" class="button button-primary button-large"><?php _e('Add More Stock', 'ferina'); ?></a></div>
+		<div style="text-align: right; padding-bottom: 15px;">
+			<a href="#" id="add-more-stocks" class="button button-primary button-large"><?php _e('Add More Stock', 'ferina'); ?></a>
+			<div class="cloneform">
+				<?php wp_dropdown_categories('taxonomy=color&hide_empty=0&orderby=name&name=ferina-color&show_option_none= -- Select Colour -- &selected=""'); ?>
+				<?php wp_dropdown_categories('taxonomy=size&hide_empty=0&orderby=name&name=ferina-size&show_option_none= -- Select Size -- &selected=""'); ?>
+				<input type="text" id="" name="" value="">
+			</div>
+		</div>
 		<table style="border:0;" class="widefat fixed striped" width="100%">
 			<thead>
 				<tr>
@@ -186,10 +196,21 @@ class mbRetailProduct {
 	public function rmbc_ferina_product_images($post){
 		global $post;
 		$upload_link = esc_url( get_upload_iframe_src( 'image', $post->ID ) );
-		$fipmeta = get_post_meta( $post->ID, '_ferina_product_images', true );
+		$fipmetas = unserialize( get_post_meta( $post->ID, '_ferina_product_images', true ) );
 		$fipattachment = wp_get_attachment_image_src( $fipmeta, 'thumbnail' );
 		$html  = '<div style="text-align: right; padding-bottom: 15px;"><a href="'.$upload_link.'" id="add-more-imgs" class="button button-primary button-large">' . __('Add More Images', 'ferina') . '</a></div>';
-		$html .= '<ul id="ferina-product-images-ul"></ul>';
+		$liimg = '';
+		if( $fipmetas != null ){
+			foreach ($fipmetas as $fipmeta) {
+				$img_ = wp_get_attachment_image_src( $fipmeta, 'thumbnail' );
+				$liimg .= '<li>';
+				$liimg .= '<img width="90" data-image-id="'.$fipmeta.'" src="'.$img_[0].'">';
+				$liimg .= '<a href="#" class="delete-fpi-li">delete</a>';
+				$liimg .= '<input type="hidden" name="ferina_product_images[]" value="'.$fipmeta.'">';
+				$liimg .= '</li>';
+			}
+		}
+		$html .= '<ul id="ferina-product-images-ul">'.$liimg.'</ul>';
 
 		echo $html;
 	}
@@ -198,10 +219,8 @@ class mbRetailProduct {
 function ferina_metaboxes_js($hook) {
 	wp_enqueue_style( 'ferina_admin_css', get_template_directory_uri() . '/asset/admin/css/_ferina_style.css' );
     
-    if ( 'post-new.php' != $hook ) {
-    	return;
-    }
-    
-    wp_enqueue_script( 'ferina_jquery_ui', get_template_directory_uri() . '/asset/admin/js/jquery-ui.min.js' );
-    wp_enqueue_script( 'ferina_metaboxes_js', get_template_directory_uri() . '/asset/admin/js/_ferina_main.js' );
+    if ( 'post-new.php' == $hook || 'post.php' == $hook ) {
+	    wp_enqueue_script( 'ferina_jquery_ui', get_template_directory_uri() . '/asset/admin/js/jquery-ui.min.js' );
+	    wp_enqueue_script( 'ferina_metaboxes_js', get_template_directory_uri() . '/asset/admin/js/_ferina_main.js' );
+	}
 }

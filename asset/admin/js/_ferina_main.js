@@ -55,5 +55,11 @@ jQuery(function($){
 
 	$('#add-more-stocks').click(function(ev){
 		ev.preventDefault();
+		var formclone = $('.cloneform').html().clone(),
+			formbaru = $('<div />');
+
+		formbaru.addClass('adding-stock-popup');
+		formbaru.append(formclone);
+		$('body').append(formbaru);
 	});
 });
