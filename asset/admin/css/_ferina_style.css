@@ -7,6 +7,10 @@
 	display: table;
 	margin-right: 10px;
 }
+#ferina-product-images-ul img {
+	height: 69px;
+	width: auto;
+}
 .delete-fpi-li {
 	color: #ff0000;
 	display: block;
