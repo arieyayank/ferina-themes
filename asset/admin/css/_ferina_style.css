@@ -14,3 +14,7 @@
 	text-align: center;
 	text-decoration: none;
 }
+.postbox-container .meta-box-sortables {
+	box-sizing: border-box;
+	width: 100%;
+}
