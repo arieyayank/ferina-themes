@@ -193,9 +193,9 @@ function ferina_metaboxes_js($hook) {
 	wp_enqueue_style( 'ferina_admin_css', get_template_directory_uri() . '/asset/admin/css/_ferina_style.css' );
     
     if ( 'post-new.php' != $hook ) {
-        return;
+    	return;
     }
-
+    
     wp_enqueue_script( 'ferina_jquery_ui', get_template_directory_uri() . '/asset/admin/js/jquery-ui.min.js' );
     wp_enqueue_script( 'ferina_metaboxes_js', get_template_directory_uri() . '/asset/admin/js/_ferina_main.js' );
 }
