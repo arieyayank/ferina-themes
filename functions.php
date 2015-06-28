@@ -1,5 +1,6 @@
 <?php
 require_once dirname( __FILE__ ) . '/inc/metabox.php';
+require_once dirname( __FILE__ ) . '/inc/metabox_wholesale.php';
 require_once dirname( __FILE__ ) . '/inc/sidebar.php';
 require_once dirname( __FILE__ ) . '/inc/menus.php';
 require_once dirname( __FILE__ ) . '/inc/meta-taxonomy.php';
@@ -30,6 +31,8 @@ function ferinatheme_after_setup(){
 	if ( is_admin() ){
 		add_action( 'load-post.php', 'ferina_meta_boxes' );
 		add_action( 'load-post-new.php', 'ferina_meta_boxes' );
+		add_action( 'load-post.php', 'ferina_meta_boxes_wholesale' );
+		add_action( 'load-post-new.php', 'ferina_meta_boxes_wholesale' );
 	}
 
 	add_action( 'admin_enqueue_scripts', 'ferina_metaboxes_js' );
@@ -189,11 +192,11 @@ function warna_numeric_posts_nav(){
 function socialloginhtml(){
 	$html  = '<p class="login-social">'. __('Or Login With', 'ferina') .'</p>';
 	$html .= '<ul class="icon-login-sos">';
-		$html .= '<li><a class="social-login facebook" href="#" title="'. __('Facebook', 'ferina') .'"><img src="'. get_bloginfo('template_url') .'/lib/img/fb.png" alt="'. __('Login With Facebook', 'ferina') .'"></a></li>';
-		$html .= '<li><a class="social-login twitter" href="#" title="'. __('Twitter', 'ferina') .'"><img src="'. get_bloginfo('template_url') .'/lib/img/tw.png" alt="'. __('Login With Twitter', 'ferina') .'"></a></li>';
-		$html .= '<li><a class="social-login path" href="#" title="'. __('Path', 'ferina') .'"><img src="'. get_bloginfo('template_url') .'/lib/img/path.png" alt="'. __('Login With Path', 'ferina') .'"></a></li>';
-		$html .= '<li><a class="social-login instagram" href="#" title="'. __('Instagram', 'ferina') .'"><img src="'. get_bloginfo('template_url') .'/lib/img/ins.png" alt="'. __('Login With Instagram', 'ferina') .'"></a></li>';
-		$html .= '<li><a class="social-login google" href="#" title="'. __('Google Plus', 'ferina') .'"><img src="'. get_bloginfo('template_url') .'/lib/img/g+.png" alt="'. __('Login With Google Plus', 'ferina') .'"></a></li>';
+		$html .= '<li><a class="social-login facebook" href="#" title="'. __('Facebook', 'ferina') .'"><img src="'. get_bloginfo('template_url') .'/asset/img/fb.png" alt="'. __('Login With Facebook', 'ferina') .'"></a></li>';
+		$html .= '<li><a class="social-login twitter" href="#" title="'. __('Twitter', 'ferina') .'"><img src="'. get_bloginfo('template_url') .'/asset/img/tw.png" alt="'. __('Login With Twitter', 'ferina') .'"></a></li>';
+		$html .= '<li><a class="social-login path" href="#" title="'. __('Path', 'ferina') .'"><img src="'. get_bloginfo('template_url') .'/asset/img/path.png" alt="'. __('Login With Path', 'ferina') .'"></a></li>';
+		$html .= '<li><a class="social-login instagram" href="#" title="'. __('Instagram', 'ferina') .'"><img src="'. get_bloginfo('template_url') .'/asset/img/ins.png" alt="'. __('Login With Instagram', 'ferina') .'"></a></li>';
+		$html .= '<li><a class="social-login google" href="#" title="'. __('Google Plus', 'ferina') .'"><img src="'. get_bloginfo('template_url') .'/asset/img/g+.png" alt="'. __('Login With Google Plus', 'ferina') .'"></a></li>';
 	$html .= '</ul>';
 	return $html;
 }
