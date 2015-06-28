@@ -1,5 +1,37 @@
 <?php
 function register_product_init() {
+	$label_sld = array(
+		'name'               => _x( 'Slider', 'post type general name', 'ferina' ),
+		'singular_name'      => _x( 'Slider', 'post type singular name', 'ferina' ),
+		'menu_name'          => _x( 'Slider', 'admin menu', 'ferina' ),
+		'name_admin_bar'     => _x( 'Slider', 'add new on admin bar', 'ferina' ),
+		'add_new'            => _x( 'Add New', 'slider', 'ferina' ),
+		'add_new_item'       => __( 'Add New Slidert', 'ferina' ),
+		'new_item'           => __( 'New Slider', 'ferina' ),
+		'edit_item'          => __( 'Edit Slider', 'ferina' ),
+		'view_item'          => __( 'View Slider', 'ferina' ),
+		'all_items'          => __( 'All Sliders', 'ferina' ),
+		'search_items'       => __( 'Search Sliders', 'ferina' ),
+		'parent_item_colon'  => __( 'Parent Sliders:', 'ferina' ),
+		'not_found'          => __( 'No products found.', 'ferina' ),
+		'not_found_in_trash' => __( 'No products found in Trash.', 'ferina' )
+	);
+
+	$arg_sld = array(
+		'labels'             => $label_sld,
+		'public'             => true,
+		'publicly_queryable' => true,
+		'show_ui'            => true,
+		'show_in_menu'       => true,
+		'query_var'          => true,
+		'rewrite'            => array( 'slug' => 'wholesale-product' ),
+		'capability_type'    => 'post',
+		'has_archive'        => true,
+		'hierarchical'       => false,
+		'menu_position'      => null,
+		'supports'           => array( 'title','editor','thumbnail' )
+	);
+
 	$label = array(
 		'name'               => _x( 'Wholesale Product', 'post type general name', 'ferina' ),
 		'singular_name'      => _x( 'Wholesale Product', 'post type singular name', 'ferina' ),
@@ -64,6 +96,7 @@ function register_product_init() {
 		'supports'           => array( 'title' )
 	);
 
+	register_post_type( 'slider', $arg_sld );
 	register_post_type( 'wholesale-product', $arg );
 	register_post_type( 'retail-product', $args );
 
